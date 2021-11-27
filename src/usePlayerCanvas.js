@@ -25,6 +25,16 @@ function usePlayerCanvas(dx, dy, size, canvasRef) {
       return;
     }
 
+    const touchHandler = (event) => {
+      event.preventDefault();
+      setXY([
+        event.changedTouches[0].clientX - event.touches[0].target.offsetLeft,
+        event.changedTouches[0].clientY - event.touches[0].target.offsetTop,
+      ]);
+    };
+
+    canvas.canvas.addEventListener("touchmove", touchHandler);
+
     const moveHandler = (event) => {
       const crc = new Path2D();
       crc.arc(x, y, 35, 0, 2 * Math.PI);
@@ -53,7 +63,10 @@ function usePlayerCanvas(dx, dy, size, canvasRef) {
     canvas.canvas.addEventListener("mouseup", upHandler);
 
     return () => {
+      canvas.canvas.removeEventListener("touchmove", touchHandler);
       canvas.canvas.removeEventListener("mousemove", moveHandler);
+      canvas.canvas.removeEventListener("mousedown", downHandler);
+      canvas.canvas.removeEventListener("mouseup", upHandler);
     };
   }, [ctx, canvas, dx, dy, dragging, x, y]);
 
