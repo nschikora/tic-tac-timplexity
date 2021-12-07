@@ -38,6 +38,14 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+      document.body.addEventListener('touchmove', function(event) {
+          event.preventDefault();
+        }, {
+        passive: false,
+        useCapture: false
+      });
+    </script>
 </body>
 
 </html>
