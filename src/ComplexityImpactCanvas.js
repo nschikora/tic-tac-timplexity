@@ -6,7 +6,7 @@ const line = { stroke: "#212121" };
 const dashedLine = { strokeLineDash: [15, 8], stroke: "#b0bec5" };
 
 function ComplexityImpactCanvas(props) {
-  const { dx, dy, diagramSize, canvasSize } = props;
+  const { dx, dy, diagramSize, canvasSize, fontReady } = props;
   const [canvas, setCanvas] = useState(null);
   const [ctx, setCtx] = useState(null);
   const canvasRef = useRef(null);
@@ -23,6 +23,8 @@ function ComplexityImpactCanvas(props) {
     if (!ctx) {
       return;
     }
+
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
 
     // axis titles
     ctx.font = "48px Architects Daughter";
@@ -90,7 +92,7 @@ function ComplexityImpactCanvas(props) {
       dx + diagramSize - highWidth,
       dy + diagramSize + 2 * axisOffset
     );
-  }, [ctx, dx, dy, diagramSize]);
+  }, [ctx, dx, dy, diagramSize, fontReady, canvasSize]);
 
   useEffect(() => {
     if (!canvas) {
@@ -150,7 +152,7 @@ function ComplexityImpactCanvas(props) {
       ],
       dashedLine
     );
-  }, [canvas, dx, dy, diagramSize]);
+  }, [canvas, dx, dy, diagramSize, fontReady]);
 
   return (
     <canvas
